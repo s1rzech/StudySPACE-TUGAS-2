@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudySpace — Cari Tempat Belajar</title>
+  <!-- Memuat berkas CSS eksternal -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- KOMPONEN 1: Header & Navigasi Utama -->
+  <header class="site-header" id="main-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="Beranda StudySpace">
+        <span class="logo-box" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </span>
+        <span class="brand-name">StudySpace</span>
+      </a>
+
+      <!-- Tombol Toggle Menu untuk Mobile -->
+      <button type="button" class="mobile-menu-toggle" id="mobile-menu-btn" aria-expanded="false" aria-controls="primary-nav" aria-label="Buka menu navigasi">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Navigasi Utama -->
+      <nav class="primary-nav" id="primary-nav" aria-label="Navigasi Utama">
+        <ul class="nav-list">
+          <li><a href="#beranda" class="nav-link">Beranda</a></li>
+          <li><a href="#cari-tempat" class="nav-link active" aria-current="page">Cari Tempat</a></li>
+          <li>
+            <a href="#favorit" class="nav-link" id="nav-favorit-link">
+              Favorit <span class="fav-badge" id="fav-counter" aria-label="Jumlah tempat favorit tersimpan">0</span>
+            </a>
+          </li>
+          <li><a href="#tentang" class="nav-link">Tentang</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Konten Utama -->
+  <main class="main-content container">
+    
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="#beranda">Beranda</a></li>
+        <li aria-hidden="true">></li>
+        <li aria-current="page">Hasil Pencarian</li>
+      </ol>
+    </nav>
+
+    <!-- Judul Halaman -->
+    <section class="page-intro" aria-labelledby="page-title">
+      <h1 id="page-title" class="page-title">Cari tempat, temukan fokus.</h1>
+      <p class="page-subtitle">Sesuaikan fasilitas dan suasana dengan kebutuhan belajarmu.</p>
+    </section>
+
+    <!-- KOMPONEN 2: Form Pencarian Kata Kunci -->
+    <section class="search-section" aria-label="Pencarian Tempat">
+      <form id="search-form" class="search-form" novalidate>
+        <div class="search-input-wrapper">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="search" 
+            id="search-input" 
+            class="search-input" 
+            placeholder="Cari nama tempat atau lokasi..." 
+            aria-label="Cari nama tempat atau lokasi"
+            autocomplete="off"
+          >
+        </div>
+        <button type="submit" class="btn btn-primary search-submit-btn" id="search-submit-btn">
+          <span aria-hidden="true">→</span> Cari Tempat
+        </button>
+      </form>
+      <p id="search-feedback" class="form-feedback" role="status" aria-live="polite" hidden></p>
+    </section>
+
+    <!-- KOMPONEN 3: Panel Filter Fasilitas & Estimasi Suasana -->
+    <section class="filter-panel" id="filter-panel" aria-label="Filter Fasilitas dan Suasana">
+      <div class="filter-row">
+        <div class="filter-group">
+          <h2 class="filter-label">Fasilitas yang dibutuhkan</h2>
+          <div class="filter-chips" role="group" aria-label="Pilih fasilitas">
+            <label class="chip-checkbox">
+              <input type="checkbox" name="facility" value="Wi-Fi" checked>
+              <span class="chip-box">
+                <span class="check-icon" aria-hidden="true"></span>
+                Wi-Fi
+              </span>
+            </label>
+            <label class="chip-checkbox">
+              <input type="checkbox" name="facility" value="Stopkontak" checked>
+              <span class="chip-box">
+                <span class="check-icon" aria-hidden="true"></span>
+                Stopkontak
+              </span>
+            </label>
+            <label class="chip-checkbox">
+              <input type="checkbox" name="facility" value="Meja">
+              <span class="chip-box">
+                <span class="check-icon" aria-hidden="true"></span>
+                Meja
+              </span>
+            </label>
+            <label class="chip-checkbox">
+              <input type="checkbox" name="facility" value="Kursi">
+              <span class="chip-box">
+                <span class="check-icon" aria-hidden="true"></span>
+                Kursi
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-actions">
+          <button type="button" class="btn btn-primary" id="apply-filter-btn">Terapkan Filter</button>
+          <button type="button" class="btn btn-outline" id="reset-filter-btn">Reset Filter</button>
+        </div>
+      </div>
+
+      <hr class="filter-divider">
+
+      <div class="filter-row vibe-row">
+        <div class="vibe-info">
+          <h2 class="filter-label">Estimasi Suasana (Berdasarkan laporan pengelola/pengguna)</h2>
+          <p class="filter-helper">Pilih suasana sesuai cara belajarmu. Kondisi dapat berubah.</p>
+        </div>
+        <div class="filter-chips" role="radiogroup" aria-label="Pilih estimasi suasana">
+          <label class="chip-radio">
+            <input type="radio" name="vibe" value="Tenang">
+            <span class="chip-box">
+              <span class="radio-dot" aria-hidden="true"></span>
+              Tenang
+            </span>
+          </label>
+          <label class="chip-radio">
+            <input type="radio" name="vibe" value="Sedang">
+            <span class="chip-box">
+              <span class="radio-dot" aria-hidden="true"></span>
+              Sedang
+            </span>
+          </label>
+          <label class="chip-radio">
+            <input type="radio" name="vibe" value="Ramai">
+            <span class="chip-box">
+              <span class="radio-dot" aria-hidden="true"></span>
+              Ramai
+            </span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- KOMPONEN 4: Bar Status Hasil & Daftar Kartu Tempat Belajar -->
+    <section class="results-section" aria-labelledby="results-heading">
+      <div class="results-header">
+        <div>
+          <h2 id="results-heading" class="results-title">Menampilkan 2 tempat dengan Wi-Fi & Stopkontak</h2>
+          <p id="results-subtitle" class="results-subtitle">2 fasilitas dipilih · Suasana belum dibatasi</p>
+        </div>
+        <button type="button" class="btn-link" id="inline-reset-btn">Reset Filter</button>
+      </div>
+
+      <!-- Grid Kartu Tempat Belajar -->
+      <div class="cards-grid" id="places-grid">
+        
+        <!-- KARTU 1: Ruang Temu -->
+        <article class="place-card" data-id="ruang-temu" data-name="Ruang Temu" data-address="Jl. Cendekia No. 12, Kota Arunika" data-facilities="Wi-Fi,Stopkontak,Meja,Kursi" data-vibe="Tenang">
+          <div class="card-media" aria-hidden="true">
+            <div class="placeholder-icon"></div>
+            <span class="placeholder-caption">Area foto contoh</span>
+          </div>
+          <div class="card-body">
+            <span class="prototype-badge">Data Contoh / Prototype</span>
+            <h3 class="card-title">Ruang Temu</h3>
+            <p class="card-address">Alamat fiktif: Jl. Cendekia No. 12, Kota Arunika</p>
+            
+            <ul class="facility-tags" aria-label="Fasilitas tersedia">
+              <li class="tag">Wi-Fi</li>
+              <li class="tag">Stopkontak</li>
+              <li class="tag">Meja</li>
+              <li class="tag">Kursi</li>
+            </ul>
+
+            <div class="vibe-estimate">
+              <span class="vibe-caption">Estimasi Suasana (Berdasarkan laporan pengelola/pengguna)</span>
+              <p class="vibe-value">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <strong>Tenang</strong>
+              </p>
+            </div>
+
+            <div class="card-footer">
+              <button type="button" class="btn btn-secondary detail-btn" data-place="Ruang Temu">Lihat Detail</button>
+              <button type="button" class="btn-save" aria-pressed="false" aria-label="Simpan Ruang Temu ke Favorit">
+                <svg class="heart-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <span class="save-label">Simpan</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- KARTU 2: Kopi Sudut Kampus -->
+        <article class="place-card" data-id="kopi-sudut-kampus" data-name="Kopi Sudut Kampus" data-address="Jl. Aksara No. 8, Kota Arunika" data-facilities="Wi-Fi,Stopkontak,Meja,Kursi" data-vibe="Sedang">
+          <div class="card-media" aria-hidden="true">
+            <div class="placeholder-icon"></div>
+            <span class="placeholder-caption">Area foto contoh</span>
+          </div>
+          <div class="card-body">
+            <span class="prototype-badge">Data Contoh / Prototype</span>
+            <h3 class="card-title">Kopi Sudut Kampus</h3>
+            <p class="card-address">Alamat fiktif: Jl. Aksara No. 8, Kota Arunika</p>
+            
+            <ul class="facility-tags" aria-label="Fasilitas tersedia">
+              <li class="tag">Wi-Fi</li>
+              <li class="tag">Stopkontak</li>
+              <li class="tag">Meja</li>
+              <li class="tag">Kursi</li>
+            </ul>
+
+            <div class="vibe-estimate">
+              <span class="vibe-caption">Estimasi Suasana (Berdasarkan laporan pengelola/pengguna)</span>
+              <p class="vibe-value">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <strong>Sedang</strong>
+              </p>
+            </div>
+
+            <div class="card-footer">
+              <button type="button" class="btn btn-secondary detail-btn" data-place="Kopi Sudut Kampus">Lihat Detail</button>
+              <button type="button" class="btn-save" aria-pressed="false" aria-label="Simpan Kopi Sudut Kampus ke Favorit">
+                <svg class="heart-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <span class="save-label">Simpan</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- KARTU 3: Perpustakaan Terpadu -->
+        <article class="place-card" data-id="perpustakaan-terpadu" data-name="Perpustakaan Terpadu" data-address="Jl. Ilmu No. 21, Kota Arunika" data-facilities="Stopkontak,Meja,Kursi" data-vibe="Tenang">
+          <div class="card-media" aria-hidden="true">
+            <div class="placeholder-icon"></div>
+            <span class="placeholder-caption">Area foto contoh</span>
+          </div>
+          <div class="card-body">
+            <span class="prototype-badge">Data Contoh / Prototype</span>
+            <h3 class="card-title">Perpustakaan Terpadu</h3>
+            <p class="card-address">Alamat fiktif: Jl. Ilmu No. 21, Kota Arunika</p>
+            
+            <ul class="facility-tags" aria-label="Fasilitas tersedia">
+              <li class="tag tag-muted">Wi-Fi tidak tersedia</li>
+              <li class="tag">Stopkontak</li>
+              <li class="tag">Meja</li>
+              <li class="tag">Kursi</li>
+            </ul>
+
+            <div class="vibe-estimate">
+              <span class="vibe-caption">Estimasi Suasana (Berdasarkan laporan pengelola/pengguna)</span>
+              <p class="vibe-value">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <strong>Tenang</strong>
+              </p>
+            </div>
+
+            <div class="card-footer">
+              <button type="button" class="btn btn-secondary detail-btn" data-place="Perpustakaan Terpadu">Lihat Detail</button>
+              <button type="button" class="btn-save" aria-pressed="false" aria-label="Simpan Perpustakaan Terpadu ke Favorit">
+                <svg class="heart-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <span class="save-label">Simpan</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- State Kosong jika tidak ada tempat yang cocok -->
+      <div class="empty-state" id="empty-state" hidden>
+        <p class="empty-title">Tidak ada tempat belajar yang sesuai dengan filter pilihanmu.</p>
+        <p class="empty-desc">Coba kurangi filter fasilitas atau ubah kata kunci pencarianmu.</p>
+        <button type="button" class="btn btn-secondary" id="empty-reset-btn">Reset Semua Filter</button>
+      </div>
+
+      <!-- Catatan Informasi Filter -->
+      <p class="filter-footnote" id="filter-footnote">
+        Perpustakaan Terpadu tidak ditampilkan karena Wi-Fi tidak tersedia pada data contoh.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- Modal Ringkas Detail Tempat (Interaktivitas Tambahan) -->
+  <aside class="modal-backdrop" id="detail-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <span class="prototype-badge">Data Contoh / Prototype</span>
+        <button type="button" class="modal-close" id="modal-close-btn" aria-label="Tutup detail">×</button>
+      </div>
+      <h2 id="modal-title" class="modal-title">Ruang Temu</h2>
+      <p id="modal-address" class="modal-address"></p>
+      <p class="modal-desc">
+        Contoh ruang belajar di luar kelas dengan meja bersama dan tempat duduk untuk mengerjakan tugas, membaca, atau berdiskusi dalam kelompok kecil.
+      </p>
+      <div class="modal-info-box">
+        <strong>Jam Operasional:</strong> <span class="tag">Belum tersedia</span>
+        <p>Pastikan jam buka langsung kepada pengelola sebelum datang.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="modal-ok-btn">Tutup Pratinjau</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- KOMPONEN 5: Footer Situs -->
+  <footer class="site-footer" id="main-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong class="footer-title">StudySpace</strong>
+        <p class="footer-tagline">Ruang yang tepat, belajar lebih fokus.</p>
+      </div>
+      <div class="footer-meta">
+        <p>Data Contoh / Prototype · Untuk eksplorasi desain</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Memuat berkas JavaScript eksternal -->
+  <script src="script.js"></script>
+</body>
+</html>
